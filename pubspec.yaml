@@ -1,10 +1,10 @@
-name: flutter_bluetooth_serial_example
+name: ecg_serial_monitor
 version: 0.4.0
-description: Demonstrates how to use the `flutter_bluetooth_serial` plugin.
-homepage: https://github.com/edufolly/flutter_bluetooth_serial/tree/master/example/
+description: A flutter app to monitor ECG data from a serial port.
+homepage: https://github.com/anuragdevon/reader_app
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=2.17.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -13,6 +13,8 @@ dependencies:
   scoped_model: ^2.0.0-nullsafety.0
   cupertino_icons: ^1.0.3
   flutter_bluetooth_serial: ^0.4.0
+  path_provider: ^2.0.11
+  downloads_path_provider: ^0.1.0
 
 dev_dependencies:
   flutter_test:

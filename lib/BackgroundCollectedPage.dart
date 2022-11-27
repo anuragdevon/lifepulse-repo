@@ -11,16 +11,15 @@ class BackgroundCollectedPage extends StatelessWidget {
         BackgroundCollectingTask.of(context, rebuildOnChange: true);
 
     // Arguments shift is needed for timestamps as miliseconds in double could loose precision.
-    final int argumentsShift =
-        task.samples.first.timestamp.millisecondsSinceEpoch;
+    // final int argumentsShift =
+    //     task.samples.first.timestamp.millisecondsSinceEpoch;
 
     final Duration showDuration =
         Duration(hours: 2); // @TODO . show duration should be configurable
     final Iterable<DataSample> lastSamples = task.getLastOf(showDuration);
 
     final Iterable<double> arguments = lastSamples.map((sample) {
-      return (sample.timestamp.millisecondsSinceEpoch - argumentsShift)
-          .toDouble();
+      return (sample.timestamp.millisecondsSinceEpoch).toDouble();
     });
 
     // Step for argument labels
@@ -51,7 +50,7 @@ class BackgroundCollectedPage extends StatelessWidget {
     final Iterable<LabelEntry> argumentsLabels =
         argumentsLabelsTimestamps.map((timestamp) {
       return LabelEntry(
-          (timestamp.millisecondsSinceEpoch - argumentsShift).toDouble(),
+          (timestamp.millisecondsSinceEpoch).toDouble(),
           ((timestamp.hour <= 9 ? '0' : '') +
               timestamp.hour.toString() +
               ':' +
@@ -84,16 +83,16 @@ class BackgroundCollectedPage extends StatelessWidget {
             Divider(),
             ListTile(
               leading: const Icon(Icons.brightness_7),
-              title: const Text('Temperatures'),
-              subtitle: const Text('In Celsius'),
+              title: const Text('Sinwave'),
+              subtitle: const Text('In Utkarsh reference'),
             ),
             LineChart(
               constraints: const BoxConstraints.expand(height: 350),
               arguments: arguments,
               argumentsLabels: argumentsLabels,
               values: [
-                lastSamples.map((sample) => sample.temperature1),
-                lastSamples.map((sample) => sample.temperature2),
+                lastSamples.map((sample) => sample.ecgData),
+                // lastSamples.map((sample) => sample.temperature2),
               ],
               verticalLinesStyle: const PaintStyle(color: Colors.grey),
               additionalMinimalHorizontalLabelsInterval: 0,
@@ -114,31 +113,31 @@ class BackgroundCollectedPage extends StatelessWidget {
                     color: Colors.redAccent),
               ],
             ),
-            Divider(),
-            ListTile(
-              leading: const Icon(Icons.filter_vintage),
-              title: const Text('Water pH level'),
-            ),
-            LineChart(
-              constraints: const BoxConstraints.expand(height: 200),
-              arguments: arguments,
-              argumentsLabels: argumentsLabels,
-              values: [
-                lastSamples.map((sample) => sample.waterpHlevel),
-              ],
-              verticalLinesStyle: const PaintStyle(color: Colors.grey),
-              additionalMinimalHorizontalLabelsInterval: 0,
-              additionalMinimalVerticalLablesInterval: 0,
-              seriesPointsStyles: [
-                null,
-              ],
-              seriesLinesStyles: [
-                const PaintStyle(
-                    style: PaintingStyle.stroke,
-                    strokeWidth: 1.7,
-                    color: Colors.greenAccent),
-              ],
-            ),
+            // Divider(),
+            // ListTile(
+            //   leading: const Icon(Icons.filter_vintage),
+            //   title: const Text('Water pH level'),
+            // ),
+            // LineChart(
+            //   constraints: const BoxConstraints.expand(height: 200),
+            //   arguments: arguments,
+            //   argumentsLabels: argumentsLabels,
+            //   values: [
+            //     lastSamples.map((sample) => sample.waterpHlevel),
+            //   ],
+            //   verticalLinesStyle: const PaintStyle(color: Colors.grey),
+            //   additionalMinimalHorizontalLabelsInterval: 0,
+            //   additionalMinimalVerticalLablesInterval: 0,
+            //   seriesPointsStyles: [
+            //     null,
+            //   ],
+            //   seriesLinesStyles: [
+            //     const PaintStyle(
+            //         style: PaintingStyle.stroke,
+            //         strokeWidth: 1.7,
+            //         color: Colors.greenAccent),
+            //   ],
+            // ),
           ],
         ));
   }
